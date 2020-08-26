@@ -55,7 +55,7 @@ export function handleUnion(
 
   /**
    * remove undefined type from union
-   * this is handled by isOptional
+   * this is handled by isOptional on the parent object (will be added to the required array of the Oapi Schema)
    */
   const optionsWithoutUndefined = filterZodOptionsByType(
     flattenedOptions,

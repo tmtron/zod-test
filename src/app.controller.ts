@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { dogSchema } from './zod-dto';
+import { DOG_OAPI_SCHEMA, dogSchema } from './zod-dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { zodToOapi3 } from './zod-to-oapi3/zod-to-oapi3';
 
 @Controller()
 @ApiTags('zod')
@@ -20,7 +19,7 @@ export class AppController {
     requestBody: {
       content: {
         'application/json': {
-          schema: zodToOapi3(dogSchema),
+          schema: DOG_OAPI_SCHEMA,
         },
       },
     },
