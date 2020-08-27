@@ -20,15 +20,15 @@ export const isOptional = (schema: ZodType<any, any>): boolean => {
 
 export function handleObject(
   context: ZtoContext,
-  zodType: ZodObject<any>,
+  zodObject: ZodObject<any>,
 ): SchemaObject {
   const result: SchemaObject = {
     type: 'object',
     properties: {},
     required: [],
   };
-  const shape = zodType.shape as ZodRawShape;
-  Object.entries(shape).map(([propertyName, zodType]) => {
+  const shape = zodObject.shape as ZodRawShape;
+  Object.entries(shape).forEach(([propertyName, zodType]) => {
     const schemaObject = context.getOpenApiSchemaType(zodType);
     if (schemaObject) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -37,7 +37,7 @@ export function handleObject(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       if (isRequired) result.required!.push(propertyName);
     } else {
-      return context.handleUnsupported(
+      context.handleUnsupported(
         `unsupported type '${
           (zodType._def as ZodTypeDef).t
         }' of object property ${propertyName}`,
